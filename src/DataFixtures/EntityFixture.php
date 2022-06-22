@@ -46,10 +46,24 @@ class EntityFixture extends Fixture
         $Student->setAdmissionNumber(12345);
         $Student->setClasss($Classes1);
         $Student->setName("Rahul");
-        
+
         $manager->persist($Student);
         $manager->flush();
 
-        $this->addReference('Student_1',$Student);
+        $Student1 = new Student();
+        $Student1->setAdmissionNumber(12345);
+        $Student1->setClasss($Classes1);
+        $Student1->setName("Takveer");
+        
+        $manager->persist($Student1);
+        $manager->flush();
+
+        $Student2 = new Student();
+        $Student2->setAdmissionNumber(12345);
+        $Student2->setClasss($Classes1);
+        $Student2->setName("Savinder");
+        
+        $manager->persist($Student2);
+        $manager->flush();
     }
 }
