@@ -2,11 +2,12 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Student;
 use App\Entity\Classes;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
-class ClassesFixture extends Fixture
+class EntityFixture extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
@@ -39,12 +40,16 @@ class ClassesFixture extends Fixture
         $Classes5->setClassName('ClassVI');
         
         $manager->persist($Classes5);
-       $manager->flush();
+        $manager->flush();
 
-       $this->addReference('Classes_1',$Classes1);
-       $this->addReference('Classes_2',$Classes2);
-       $this->addReference('Classes_3',$Classes3);
-       $this->addReference('Classes_4',$Classes4);
-       $this->addReference('Classes_5',$Classes5);
+        $Student = new Student();
+        $Student->setAdmissionNumber(12345);
+        $Student->setClasss($Classes1);
+        $Student->setName("Rahul");
+        
+        $manager->persist($Student);
+        $manager->flush();
+
+        $this->addReference('Student_1',$Student);
     }
 }
