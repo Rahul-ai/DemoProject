@@ -5,9 +5,10 @@ namespace App\Controller;
 use App\Entity\Classes;
 use App\Form\ClassFormType;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ClassesController extends AbstractController
 {
@@ -22,11 +23,21 @@ class ClassesController extends AbstractController
     }
  
     #[Route('/GetClasses', name: 'GetClasses')]
-    public function GetClasses(): Response
+    public function GetClasses(Request $request): Response
     {
         $Classes =  $this->repo->findAll();
         $Class = new Classes();
         $form = $this->createForm(ClassFormType::class,$Class);
+        
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+            $newClass = $form->getData();    
+            $this->em->persist($newClass);
+            $this->em->flush();  
+            return $this->redirectToRoute('GetClasses');
+        }
+
         return $this->render('classes/index.html.twig', [
             'Classes' => $Classes,
             'form' => $form->createView()

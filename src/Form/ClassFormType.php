@@ -15,10 +15,9 @@ class ClassFormType extends AbstractType
         $builder
             ->add('Class_Name',TextType::class,[
                 'attr' => array(
-                    'class' => 'class_name form-control',
+                    'class' => 'Class_Name form-control',
                     'placeholder' => 'Class Name'
                 ),
-                'label' => 'Class Name:'
             ]);
     }
 
