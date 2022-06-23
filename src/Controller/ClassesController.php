@@ -30,10 +30,10 @@ class ClassesController extends AbstractController
         ]);
     }
 
-    #[Route('/Postclasses', name: 'Postclasses')]
+    #[Route('/PostClasses', name: 'PostClasses')]
     public function PostClasses(): Response
     {
-        $Classes =  $this->repo->findAll();
+        $Classes =  $this->repo->count([]);
         dd($Classes);
         return $this->render('classes/index.html.twig', [
             'controller_name' => 'ClassesController',
