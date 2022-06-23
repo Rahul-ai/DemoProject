@@ -31,7 +31,8 @@ class ClassesController extends AbstractController
         
         $form->handleRequest($request);
 
-        if($form->isSubmitted() && $form->isValid()){
+        if($form->isSubmitted() && $form->isValid())
+        {
             $newClass = $form->getData();    
             $this->em->persist($newClass);
             $this->em->flush();  
@@ -40,8 +41,7 @@ class ClassesController extends AbstractController
 
         return $this->render('classes/index.html.twig', [
             'Classes' => $Classes,
-            'form' => $form->createView()
-        ]);
+            'form' => $form->createView() ]);
     }
 
     #[Route('/GetClassById/{Id}', name: 'GetClassById', methods:['GET'])]
