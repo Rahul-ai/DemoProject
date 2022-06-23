@@ -72,9 +72,10 @@ class ClassesController extends AbstractController
         ]);
     }
 
-    #[Route('/DeletedClasses', name: 'DeletedClasses')]
-    public function DeletedClasses(): Response
+    #[Route('/DeletedClasses/{Id}', name: 'DeletedClasses')]
+    public function DeletedClasses($Id): Response
     {
+        dd($Id);
         $Classes =  $this->repo->findAll();
         dd($Classes);
         return $this->render('classes/index.html.twig', [
