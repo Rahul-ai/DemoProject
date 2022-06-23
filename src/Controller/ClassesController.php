@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Classes;
+use App\Form\ClassFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,7 +25,19 @@ class ClassesController extends AbstractController
     public function GetClasses(): Response
     {
         $Classes =  $this->repo->findAll();
-        // dd($Classes);
+        $Class = new Classes();
+        $form = $this->createForm(ClassFormType::class,$Class);
+        return $this->render('classes/index.html.twig', [
+            'Classes' => $Classes,
+            'form' => $form->createView()
+        ]);
+    }
+
+    #[Route('/GetClassById/{Id}', name: 'GetClassById', methods:['GET'])]
+    public function GetClassById($Id): Response
+    {
+        $Classes =  $this->repo->find($Id);
+       
         return $this->render('classes/index.html.twig', [
             'Classes' => $Classes,
         ]);
@@ -33,7 +46,6 @@ class ClassesController extends AbstractController
     #[Route('/PostClasses', name: 'PostClasses')]
     public function PostClasses(): Response
     {
-        $Classes =  $this->repo->count([]);
         return $this->render('classes/index.html.twig', [
             'controller_name' => 'ClassesController',
         ]);

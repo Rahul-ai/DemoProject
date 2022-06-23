@@ -1,20 +1,16 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ClassesController!{% endblock %}
+{% block title %}Add Classes {% endblock %}
 
 {% block body %}
 <div  class="container" >
     <h1>Add Class</h1>
-    <Form method="post" action="">
-    <div class="form-group">
-    <label for="ClassName">ClassName:</label>
-    <input type="text" id="ClassName" class="form-control" name ="ClassName" placeholder="ClassName" />
-    <span class="text-danger"></span>
-</div>
+    {{form_start(form)}}
+    {{ form_widget(form)}}
 <div class="mt-1 form-group">
     <input class="btn btn-primary" type="Submit" value="Add Class"/>
 </div>
-</Form>
+{{form_end(form)}}
 </div>
 </div>
 
@@ -34,7 +30,7 @@
  <td id="" class="Student_Count">0</td> 
  <td><button id="{{class.id}}" class="edit_data btn btn-info">Edit</button></td>
  <td><button id="{{class.id}}" class="delete_data btn btn-danger">Delete</button></td>
-   </tr>  
+</tr>  
 {% endfor %}
    </table>
 </div>
