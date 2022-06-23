@@ -17,7 +17,8 @@ class ClassFormType extends AbstractType
                 'attr' => array(
                     'class' => 'class_name form-control',
                     'placeholder' => 'Class Name'
-                )
+                ),
+                'label' => 'Class Name:'
             ]);
     }
 
