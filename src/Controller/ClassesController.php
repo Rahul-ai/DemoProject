@@ -11,7 +11,8 @@ use Symfony\Component\Routing\Annotation\Route;
 class ClassesController extends AbstractController
 {
     private $em;
-    public $repo;
+    private $repo;
+
     public function __construct(EntityManagerInterface $em )
     {
         $this->em = $em;
