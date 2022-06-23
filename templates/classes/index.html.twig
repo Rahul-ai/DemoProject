@@ -36,9 +36,9 @@
 {% endfor %}
    </table>
 </div>
-{% block JQuery %}
 
-<script>  
+{% block JQuery %}
+<script>
 $(document).ready(function(){
     $('.delete_data').click(function(){
         var id = $(this).attr("id");
@@ -54,5 +54,6 @@ $(document).ready(function(){
 });
 </script>
 {% endblock %}
+
 {% endblock %}
 
