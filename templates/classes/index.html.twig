@@ -17,4 +17,25 @@
 </Form>
 </div>
 </div>
+
+    <div class="mt-3 container">
+    <table class="table table-bordered">
+    <tr id="a">  
+<th id="ClassId">ClassId</th>
+<th id="Class_Name">Class_Name</th> 
+<th id="Student_Count">Student_Count</th>
+<th id="Edit">Edit</th> 
+<th id="Delete">Delete</th>  
+</tr>
+{% for class in Classes %}
+ <tr id="a">  
+ <td id="{{class.id}}">{{class.id}}</td>   
+ <td id="{{class.getClassName()}}">{{class.getClassName()}}</td> 
+ <td id="" class="Student_Count">0</td> 
+ <td><button id="{{class.id}}" class="edit_data btn btn-info">Edit</button></td>
+ <td><button id="{{class.id}}" class="delete_data btn btn-danger">Delete</button></td>
+   </tr>  
+{% endfor %}
+   </table>
+</div>
 {% endblock %}

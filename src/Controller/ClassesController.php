@@ -24,8 +24,9 @@ class ClassesController extends AbstractController
     public function GetClasses(): Response
     {
         $Classes =  $this->repo->findAll();
+        // dd($Classes);
         return $this->render('classes/index.html.twig', [
-            'controller_name' => 'ClassesController',
+            'Classes' => $Classes,
         ]);
     }
 
@@ -33,7 +34,6 @@ class ClassesController extends AbstractController
     public function PostClasses(): Response
     {
         $Classes =  $this->repo->count([]);
-        dd($Classes);
         return $this->render('classes/index.html.twig', [
             'controller_name' => 'ClassesController',
         ]);
