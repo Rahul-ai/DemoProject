@@ -24,7 +24,6 @@ class ClassesController extends AbstractController
     public function GetClasses(): Response
     {
         $Classes =  $this->repo->findAll();
-        dd($Classes);
         return $this->render('classes/index.html.twig', [
             'controller_name' => 'ClassesController',
         ]);

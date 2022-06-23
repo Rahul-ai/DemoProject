@@ -70,6 +70,12 @@ Encore
 
     // uncomment if you're having problems with a jQuery plugin
     //.autoProvidejQuery()
+
+    .enablePostCssLoader((option) => {
+        option.postcssOptions ={
+            config : './postcss.config.js'
+        }
+    })
 ;
 
 module.exports = Encore.getWebpackConfig();

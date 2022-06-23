@@ -3,18 +3,18 @@
 {% block title %}Hello ClassesController!{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/Users/Rahul/Desktop/DemoProject/src/Controller/ClassesController.php'|file_link(0) }}">src/Controller/ClassesController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/Users/Rahul/Desktop/DemoProject/templates/classes/index.html.twig'|file_link(0) }}">templates/classes/index.html.twig</a></code></li>
-    </ul>
+<div  class="container" >
+    <h1>Add Class</h1>
+    <Form method="post" action="">
+    <div class="form-group">
+    <label for="ClassName">ClassName:</label>
+    <input type="text" id="ClassName" class="form-control" name ="ClassName" placeholder="ClassName" />
+    <span class="text-danger"></span>
+</div>
+<div class="mt-1 form-group">
+    <input class="btn btn-primary" type="Submit" value="Add Class"/>
+</div>
+</Form>
+</div>
 </div>
 {% endblock %}
