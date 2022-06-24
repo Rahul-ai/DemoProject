@@ -39,6 +39,15 @@ class StudentRepository extends ServiceEntityRepository
         }
     }
 
+        /**
+     * @return Collection<array<string,mixed>>
+     */
+    public function RawQuery($RawQuery = null)
+    {
+        $statement = $this->getEntityManager()->getConnection()->prepare($RawQuery);
+        return $statement->executeQuery()->fetchAllAssociative();   
+    }
+
 //    /**
 //     * @return Student[] Returns an array of Student objects
 //     */

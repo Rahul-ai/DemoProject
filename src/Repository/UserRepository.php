@@ -39,6 +39,15 @@ class UserRepository extends ServiceEntityRepository
         }
     }
 
+     /**
+     * @return Collection<array<string,mixed>>
+     */
+    public function RawQuery($RawQuery = null)
+    {
+        $statement = $this->getEntityManager()->getConnection()->prepare($RawQuery);
+        return $statement->executeQuery()->fetchAllAssociative();   
+    }
+
 //    /**
 //     * @return User[] Returns an array of User objects
 //     */

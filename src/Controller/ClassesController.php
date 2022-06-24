@@ -39,12 +39,10 @@ class ClassesController extends AbstractController
         }
 
         $RAW_QUERY = 'SELECT a.id, a.class_name, COUNT(c.Id) AS Student_Count FROM classes a 
-        LEFT JOIN student c ON c.id = a.id
+        LEFT JOIN student c ON c.classs_id = a.id
         GROUP BY a.id';
-        
-        $statement = $this->em->getConnection()->prepare($RAW_QUERY);
-        $Classes = $statement->executeQuery()->fetchAllAssociative();
 
+        $Classes = $this->repo->RawQuery($RAW_QUERY);
         return $this->render('classes/index.html.twig', [
             'Classes' => $Classes,
             'form' => $form->createView() ]);

@@ -4,7 +4,9 @@ namespace App\Repository;
 
 use App\Entity\Classes;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\Persistence\ManagerRegistry;
+use PhpParser\Node\Expr\Cast\Array_;
 
 /**
  * @extends ServiceEntityRepository<Classes>
@@ -37,6 +39,15 @@ class ClassesRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    /**
+     * @return Collection<array<string,mixed>>
+     */
+    public function RawQuery($RawQuery = null)
+    {
+        $statement = $this->getEntityManager()->getConnection()->prepare($RawQuery);
+        return $statement->executeQuery()->fetchAllAssociative();   
     }
 
 //    /**

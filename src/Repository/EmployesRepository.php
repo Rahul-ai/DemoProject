@@ -39,6 +39,15 @@ class EmployesRepository extends ServiceEntityRepository
         }
     }
 
+    /**
+     * @return Collection<array<string,mixed>>
+     */
+    public function RawQuery($RawQuery = null)
+    {
+        $statement = $this->getEntityManager()->getConnection()->prepare($RawQuery);
+        return $statement->executeQuery()->fetchAllAssociative();       
+    }
+
 //    /**
 //     * @return Employes[] Returns an array of Employes objects
 //     */
