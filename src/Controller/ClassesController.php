@@ -25,7 +25,6 @@ class ClassesController extends AbstractController
     #[Route('/GetClasses', name: 'GetClasses')]
     public function GetClasses(Request $request): Response
     {
-        $Classes =  $this->repo->findAll();
         $Class = new Classes();
         $form = $this->createForm(ClassFormType::class,$Class);
         
@@ -39,6 +38,7 @@ class ClassesController extends AbstractController
             return $this->redirectToRoute('GetClasses');
         }
 
+        $Classes =  $this->repo->findAll();
         return $this->render('classes/index.html.twig', [
             'Classes' => $Classes,
             'form' => $form->createView() ]);
@@ -62,24 +62,32 @@ class ClassesController extends AbstractController
         ]);
     }
 
-    #[Route('/PutClasses', name: 'PutClasses')]
-    public function PutClasses(): Response
+    #[Route('/PutClasses/{Id}', name: 'PutClasses')]
+    public function PutClasses(Request $request,$Id): Response
     {
-        $Classes =  $this->repo->findAll();
-        dd($Classes);
-        return $this->render('classes/index.html.twig', [
-            'controller_name' => 'ClassesController',
+        $Class =  $this->repo->findOneBy(['id'=>$Id]);
+        
+        $form = $this->createForm(ClassFormType::class,$Class);
+
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid())
+        {
+            $Class->class_name = $form->getData("Class_Name");
+            $this->em->flush();
+            return $this->redirectToRoute('GetClasses');
+        }
+        return $this->render('classes/EditClass.html.twig', [
+            'form'=> $form->createView(),
         ]);
     }
 
     #[Route('/DeletedClasses/{Id}', name: 'DeletedClasses')]
     public function DeletedClasses($Id): Response
     {
-        dd($Id);
-        $Classes =  $this->repo->findAll();
-        dd($Classes);
-        return $this->render('classes/index.html.twig', [
-            'controller_name' => 'ClassesController',
-        ]);
+        $Class =  $this->repo->findOneBy(['id'=>$Id]);
+        $Classes = $this->repo->remove($Class);
+        $this->em->flush();
+        return $this->redirectToRoute('GetClasses');
     }
 }

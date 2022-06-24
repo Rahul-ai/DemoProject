@@ -3,7 +3,12 @@
 {% block title %}Edit Classes{% endblock %}
 
 {% block body %}
-
-
+<h1>Edit Class</h1>
+{{form_start(form)}}
+{{form_widget(form)}}
+<div class="mt-1 form-group">
+    <input class="btn btn-primary" type="Submit" value="Edit Class"/>
+</div>
+{{form_end(form)}}
 
 {% endblock %}

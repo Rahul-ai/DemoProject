@@ -7,7 +7,6 @@
     <h1>Add Class</h1>
     {{form_start(form)}}
     {{ form_widget(form)}}
-<div class="mt-1 form-group">
     <input class="btn btn-primary" type="Submit" value="Add Class"/>
 </div>
 {{form_end(form)}}
@@ -29,13 +28,14 @@
  <td id="{{class.id}}">{{a}}</td>   
  <td id="{{class.getClassName()}}">{{class.getClassName()}}</td> 
  <td id="" class="Student_Count">0</td> 
- <td><button id="{{class.id}}" class="edit_data btn btn-info">Edit</button></td>
+ <td><a id="{{class.id}}" href="PutClasses/{{class.id}}" class="edit_data btn btn-info">Edit</a></td>
  <td><button id="{{class.id}}" class="delete_data btn btn-danger">Delete</button></td>
 </tr>  
 {% set a=a+1 %}
 {% endfor %}
    </table>
 </div>
+{% endblock %}
 
 {% block JQuery %}
 <script>
@@ -54,6 +54,3 @@ $(document).ready(function(){
 });
 </script>
 {% endblock %}
-
-{% endblock %}
-
