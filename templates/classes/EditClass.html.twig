@@ -8,6 +8,7 @@
 {{form_widget(form)}}
 <div class="mt-1 form-group">
     <input class="btn btn-primary" type="Submit" value="Edit Class"/>
+    <a href="{{ app.request.getBaseURL() }}/GetClasses" class="btn btn-info">Cancel<a/>
 </div>
 {{form_end(form)}}
 
