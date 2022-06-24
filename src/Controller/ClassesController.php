@@ -44,6 +44,7 @@ class ClassesController extends AbstractController
         
         $statement = $this->em->getConnection()->prepare($RAW_QUERY);
         $Classes = $statement->executeQuery()->fetchAllAssociative();
+        
         return $this->render('classes/index.html.twig', [
             'Classes' => $Classes,
             'form' => $form->createView() ]);
