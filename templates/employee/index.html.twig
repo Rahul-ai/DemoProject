@@ -3,5 +3,13 @@
 {% block title %}Add Employee{% endblock %}
 
 {% block body %}
-
+<div  class="container" >
+    <h1>Add Class</h1>
+    {{form_start(form)}}
+    {{ form_widget(form)}}
+    <input class="mt-2 btn btn-primary" type="Submit" value="Add Class"/>
+</div>
+{{form_end(form)}}
+{{form_end(form)}}
+</div>
 {% endblock %}

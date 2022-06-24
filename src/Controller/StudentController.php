@@ -64,7 +64,7 @@ class StudentController extends AbstractController
             $this->em->flush();
             return $this->redirectToRoute('GetStudent');
         }
-
+        
         return $this->render('student/editstudent.html.twig', [
             'form'=> $form->createView(),
         ]);
