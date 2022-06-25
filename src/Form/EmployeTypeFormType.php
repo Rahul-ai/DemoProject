@@ -20,12 +20,14 @@ class EmployeTypeFormType extends AbstractType
                 ),
                 
             ])
+
             ->add('EmployeeCode',TextType::class,[
                 'attr'=>array(
                     'class'=>'form-control',
                     'placeholder' => 'Employee Code'
                 )
             ])
+            
             ->add('Role',TextType::class,[
                 'attr'=>array(
                     'class'=>'form-control',
