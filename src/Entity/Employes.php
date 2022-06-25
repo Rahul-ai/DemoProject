@@ -9,7 +9,6 @@ use Doctrine\ORM\Mapping as ORM;
 class Employes
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
     private $id;
 
@@ -25,6 +24,13 @@ class Employes
     #[ORM\Column(type: 'string', length: 26)]
     private $Name;
 
+    public function setId(int $Id): self
+    {
+        $this->id = $Id;
+
+        return $this;
+    }
+    
     public function getId(): ?int
     {
         return $this->id;

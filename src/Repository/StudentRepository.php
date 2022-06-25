@@ -3,8 +3,12 @@
 namespace App\Repository;
 
 use App\Entity\Student;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
+use Exception;
 
 /**
  * @extends ServiceEntityRepository<Student>
@@ -16,8 +20,10 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class StudentRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    private $em;
+    public function __construct(ManagerRegistry $registry, EntityManagerInterface $em)
     {
+        $this->em = $em;
         parent::__construct($registry, Student::class);
     }
 
@@ -39,7 +45,7 @@ class StudentRepository extends ServiceEntityRepository
         }
     }
 
-        /**
+     /**
      * @return Collection<array<string,mixed>>
      */
     public function RawQuery($RawQuery = null)
@@ -47,6 +53,37 @@ class StudentRepository extends ServiceEntityRepository
         $statement = $this->getEntityManager()->getConnection()->prepare($RawQuery);
         return $statement->executeQuery()->fetchAllAssociative();   
     }
+
+    public function AddStudentWithUser(Student $newStudent)
+    {
+        try {
+            $this->getEntityManager()->getConnection()->beginTransaction();
+        
+            //Add UserData
+            $User = new User();
+            $Algo = "@gmail.com";
+            $UserName = $newStudent->getName();
+            $UserName = str_replace(" ","", $UserName); 
+            $UserName = $UserName.$Algo;
+            $User->setUserName($UserName);
+            $User->setPassword(12345);
+            $this->em->persist($User);
+            $this->em->flush();
+
+            //Add StudentData
+            $newStudent->setId($User->getId());
+            $this->getEntityManager()->persist($newStudent);
+            $User = $this->getEntityManager()->flush();
+
+            $this->getEntityManager()->getConnection()->commit();
+        } 
+        catch (Exception $e) {
+            $this->getEntityManager()->getConnection()->rollback();
+            throw $e;
+        }
+    }
+
+
 
 //    /**
 //     * @return Student[] Returns an array of Student objects

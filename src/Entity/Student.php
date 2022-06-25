@@ -9,7 +9,6 @@ use Doctrine\ORM\Mapping as ORM;
 class Student
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
     private $id;
 
@@ -22,6 +21,13 @@ class Student
     #[ORM\ManyToOne(targetEntity: Classes::class, inversedBy: 'students')]
     #[ORM\JoinColumn(nullable: false)]
     private $classs;
+
+    public function setId(int $Id): self
+    {
+        $this->id = $Id;
+
+        return $this;
+    }
 
     public function getId(): ?int
     {
