@@ -27,7 +27,8 @@ class EmployeTypeFormType extends AbstractType
                     'placeholder' => 'Employee Code'
                 )
             ])
-            
+
+            // make role as Drop Down
             ->add('Role',TextType::class,[
                 'attr'=>array(
                     'class'=>'form-control',
