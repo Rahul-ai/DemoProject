@@ -2,9 +2,11 @@
 
 namespace App\Repository;
 
+use Exception;
+use App\Entity\User;
 use App\Entity\Employes;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @extends ServiceEntityRepository<Employes>
@@ -46,6 +48,36 @@ class EmployesRepository extends ServiceEntityRepository
     {
         $statement = $this->getEntityManager()->getConnection()->prepare($RawQuery);
         return $statement->executeQuery()->fetchAllAssociative();       
+    }
+
+    public function AddStudentWithUser(Employes $newEmployee)
+    {
+        try {
+            $this->getEntityManager()->getConnection()->beginTransaction();
+        
+            //Add UserData
+            $User = new User();
+            $Algo = "@gmail.com";
+            $UserName = $newEmployee->getName();
+            $UserName = str_replace(" ","", $UserName); 
+            $UserName = $UserName.$Algo;
+            $User->setUserName($UserName);
+            $User->setPassword(12345);
+            $this->em->persist($User);
+            $this->em->flush();
+
+            //Add StudentData
+            $newEmployee->setId($User->getId());
+            $this->getEntityManager()->persist($newEmployee);
+            $User = $this->getEntityManager()->flush();
+
+            $this->getEntityManager()->getConnection()->commit();
+        } 
+        catch (Exception $e)
+        {
+            $this->getEntityManager()->getConnection()->rollback();
+            throw $e;
+        }
     }
 
 //    /**
