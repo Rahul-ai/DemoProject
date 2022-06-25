@@ -41,7 +41,7 @@ class EmployeeController extends AbstractController
 
         return $this->render('employee/index.html.twig', [
             'form' => $form->createView(),
-            'Students' => $Employes,
+            'Employes' => $Employes,
         ]);
     }
 
