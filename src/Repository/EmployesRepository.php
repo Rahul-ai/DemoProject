@@ -7,6 +7,7 @@ use App\Entity\User;
 use App\Entity\Employes;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\EntityManagerInterface;
 
 /**
  * @extends ServiceEntityRepository<Employes>
@@ -18,8 +19,10 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
  */
 class EmployesRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    private $em;
+    public function __construct(ManagerRegistry $registry, EntityManagerInterface $em)
     {
+        $this->em = $em;     
         parent::__construct($registry, Employes::class);
     }
 
@@ -50,7 +53,7 @@ class EmployesRepository extends ServiceEntityRepository
         return $statement->executeQuery()->fetchAllAssociative();       
     }
 
-    public function AddStudentWithUser(Employes $newEmployee)
+    public function AddEmployeAsUser(Employes $newEmployee)
     {
         try {
             $this->getEntityManager()->getConnection()->beginTransaction();

@@ -32,7 +32,7 @@ class EmployeeController extends AbstractController
         
         if($form->isSubmitted() && $form->isValid()){
             $newEmployee = $form->getData();
-            $this->em->persist($newEmployee);
+            $this->repo->AddEmployeAsUser($newEmployee);
             $this->em->flush();
             return $this->redirectToRoute('GetEmployee');
         }

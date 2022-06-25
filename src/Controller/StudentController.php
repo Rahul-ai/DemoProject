@@ -36,7 +36,7 @@ class StudentController extends AbstractController
         
         if($form->isSubmitted() && $form->isValid()){
             $newStudent = $form->getData();
-            $this->repo->AddStudentWithUser($newStudent);
+            $this->repo->AddStudentAsUser($newStudent);
             return $this->redirectToRoute('GetStudent');
         }
         

@@ -54,7 +54,7 @@ class StudentRepository extends ServiceEntityRepository
         return $statement->executeQuery()->fetchAllAssociative();   
     }
 
-    public function AddStudentWithUser(Student $newStudent)
+    public function AddStudentAsUser(Student $newStudent)
     {
         try {
             $this->getEntityManager()->getConnection()->beginTransaction();
