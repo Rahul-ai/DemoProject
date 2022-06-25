@@ -22,6 +22,9 @@ class Employes
     #[ORM\Column(type: 'boolean')]
     private $IsDeleted;
 
+    #[ORM\Column(type: 'string', length: 26)]
+    private $Name;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -59,6 +62,18 @@ class Employes
     public function setIsDeleted(bool $IsDeleted): self
     {
         $this->IsDeleted = $IsDeleted;
+
+        return $this;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->Name;
+    }
+
+    public function setName(string $Name): self
+    {
+        $this->Name = $Name;
 
         return $this;
     }

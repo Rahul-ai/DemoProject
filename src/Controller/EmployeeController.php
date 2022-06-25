@@ -4,7 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Student;
 use App\Entity\Employes;
-use App\Form\EmployeeFormType;
+use App\Form\EmployeFormType;
+use App\Form\EmployeTypeFormType;
 use App\Form\StudentTypeFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,7 +27,7 @@ class EmployeeController extends AbstractController
     public function GetAllEmployee(Request $request): Response
     {
         $Employee = new Employes();
-        $form = $this->createForm(EmployeeFormType::class,$Employee);
+        $form = $this->createForm(EmployeTypeFormType::class,$Employee);
         $form->handleRequest($request);
         
         if($form->isSubmitted() && $form->isValid()){
