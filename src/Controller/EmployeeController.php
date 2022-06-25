@@ -20,7 +20,7 @@ class EmployeeController extends AbstractController
     function __construct(EntityManagerInterface $em )
     {
         $this->em = $em;
-        $this->repo = $em->getRepository(Student::class);
+        $this->repo = $em->getRepository(Employes::class);
     }
 
     #[Route('/GetEmployee', name: 'GetEmployee')]
@@ -38,41 +38,41 @@ class EmployeeController extends AbstractController
         }
         
         $Employes = $this->repo->findAll();
-
+        
         return $this->render('employee/index.html.twig', [
             'form' => $form->createView(),
             'Employes' => $Employes,
         ]);
     }
 
-    #[Route('/PutStudent/{Id}', name: 'PutStudent')]
+    #[Route('/PutEmployee/{Id}', name: 'PutEmployee')]
     public function PutStudent(Request $request,$Id): Response
     {
-        $Student =  $this->repo->findOneBy(['id'=>$Id]);
+        $Employee =  $this->repo->findOneBy(['id'=>$Id]);
         
-        $form = $this->createForm(StudentTypeFormType::class,$Student);
+        $form = $this->createForm(EmployeTypeFormType::class,$Employee);
 
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid())
         {
-            $Student = $form->getData();
+            $Employee = $form->getData();
             $this->em->flush();
-            return $this->redirectToRoute('GetStudent');
+            return $this->redirectToRoute('GetEmployee');
         }
         
-        return $this->render('student/editstudent.html.twig', [
+        return $this->render('employee/editEmployee.html.twig', [
             'form'=> $form->createView(),
         ]);
     }
 
 
-    #[Route('/DeletedStudent/{Id}', name: 'DeletedStudent')]
+    #[Route('/DeletedEmployee/{Id}', name: 'DeletedEmployee')]
     public function DeletedClasses($Id): Response
     {
-        $Student =  $this->repo->findOneBy(['id'=>$Id]);
-        $this->repo->remove($Student);
+        $Employee =  $this->repo->findOneBy(['id'=>$Id]);
+        $this->repo->remove($Employee);
         $this->em->flush();
-        return $this->redirectToRoute('GetStudent');
+        return $this->redirectToRoute('GetEmployee');
     }
 }

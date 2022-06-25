@@ -71,6 +71,7 @@ class EmployesRepository extends ServiceEntityRepository
 
             //Add StudentData
             $newEmployee->setId($User->getId());
+            $newEmployee->setIsDeleted(false);
             $this->getEntityManager()->persist($newEmployee);
             $User = $this->getEntityManager()->flush();
 
