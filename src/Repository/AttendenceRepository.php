@@ -39,6 +39,15 @@ class AttendenceRepository extends ServiceEntityRepository
         }
     }
 
+     /**
+     * @return Collection<array<string,mixed>>
+     */
+    public function RawQuery($RawQuery = null)
+    {
+        $statement = $this->getEntityManager()->getConnection()->prepare($RawQuery);
+        return $statement->executeQuery()->fetchAllAssociative();   
+    }
+
 //    /**
 //     * @return Attendence[] Returns an array of Attendence objects
 //     */
