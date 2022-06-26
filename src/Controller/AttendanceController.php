@@ -46,6 +46,7 @@ class AttendanceController extends AbstractController
         GROUP BY c.id";
 
         $Attendances = $this->repo->RawQuery($RAW_QUERY);
+        dd($Attendances);
         $forms = array();
     
         foreach($Attendances as $Attendance)
