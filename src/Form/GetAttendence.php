@@ -2,13 +2,15 @@
 
 namespace App\Form;
 
+
 use App\Entity\Classes;
-use App\Entity\Attendence;
+use App\Entity\GetAtt;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class GetAttendence extends AbstractType
 {
@@ -17,6 +19,9 @@ class GetAttendence extends AbstractType
         $builder
             ->add('ClassId',EntityType::class,[
              'class' => Classes::class,
+             'choice_label' => function($choice){
+                return $choice->getClassName();
+            },
              'attr' => array()
             ])
             ->add('Date',DateType::class,[
@@ -27,7 +32,6 @@ class GetAttendence extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Attendence::class,
         ]);
     }
 }
