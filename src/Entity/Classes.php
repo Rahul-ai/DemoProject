@@ -21,6 +21,9 @@ class Classes
     #[ORM\OneToMany(mappedBy: 'classs', targetEntity: Student::class)]
     private $students;
 
+    #[ORM\Column(type: 'boolean')]
+    private $IsDeleted;
+
     public function __construct()
     {
         $this->students = new ArrayCollection();
@@ -69,6 +72,18 @@ class Classes
                 $student->setClasss(null);
             }
         }
+
+        return $this;
+    }
+
+    public function isIsDeleted(): ?bool
+    {
+        return $this->IsDeleted;
+    }
+
+    public function setIsDeleted(bool $IsDeleted): self
+    {
+        $this->IsDeleted = $IsDeleted;
 
         return $this;
     }

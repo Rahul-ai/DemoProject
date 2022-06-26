@@ -32,7 +32,8 @@ class ClassesController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid())
         {
-            $newClass = $form->getData();    
+            $newClass = $form->getData();
+            $newClass->setIsDeleted(false);    
             $this->em->persist($newClass);
             $this->em->flush();  
             return $this->redirectToRoute('GetClasses');
