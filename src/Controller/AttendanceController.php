@@ -29,24 +29,23 @@ class AttendanceController extends AbstractController
     public function index(Request $request): Response
     {
        
-        $form = $this->createForm(GetAttendence::class);
-        
-        $a = $form->handleRequest($request);
+        $form = $this->createForm(GetAttendence::class);       
+        $form->handleRequest($request);
     
         if($form->isSubmitted() && $form->isValid())
         {
             $newClass = $form->getData("ClassId");
             $id = $newClass['ClassId']->getid(); 
-            $Date = $newClass['Date'] ;
+            $Date = $newClass['Date'];
+            $Date = date_format($Date,"Y/m/d");    
             
-        $RAW_QUERY = 'SELECT a.id As student_id ,a.classs_id As class_id,c.status,c.date FROM student a
-        LEFT JOIN classes b ON a.classs_id = b.id  
-        LEFT JOIN attendence c ON a.id = c.student_id 
-        Where a.classs_id = 1
-        GROUP BY a.id';
+        $RAW_QUERY = "SELECT c.Admission_Number,c.Name, a.Class_Name, a.id AS Class_id,c.id As Student_id, b.Status , b.Date FROM student c   
+        LEFT JOIN attendence b ON c.id = b.Student_Id AND b.Date = '$Date'
+        RIGHT JOIN classes a ON a.id = c.classs_id     
+        WHERE c.classs_Id = $id  
+        GROUP BY c.id";
 
         $Attendances = $this->repo->RawQuery($RAW_QUERY);
-        dd($Attendances);
         $forms = array();
     
         foreach($Attendances as $Attendance)
