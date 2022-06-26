@@ -4,9 +4,10 @@ namespace App\Form;
 
 use App\Entity\Employes;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class EmployeTypeFormType extends AbstractType
 {
@@ -28,8 +29,11 @@ class EmployeTypeFormType extends AbstractType
                 )
             ])
 
-            // make role as Drop Down
-            ->add('Role',TextType::class,[
+            ->add('Role',ChoiceType::class,[
+                'choices'  => [
+                    'Teacher' => 'Teacher',
+                    'Admin' => 'Admin'
+                ],
                 'attr'=>array(
                     'class'=>'form-control',
                     'placeholder' => 'Role'
