@@ -28,8 +28,8 @@ class AttendanceController extends AbstractController
     
     }
  
-    #[Route('/attendance', name: 'attendance')]
-    public function index(Request $request): Response
+    #[Route('/GetAtten', name: 'GetAtten')]
+    public function GetAtten(Request $request): Response
     {
        
         $form = $this->createForm(GetAttendence::class);       
@@ -40,34 +40,20 @@ class AttendanceController extends AbstractController
             $newClass = $form->getData("ClassId");
             $id = $newClass['ClassId']->getid(); 
             $Date = $newClass['Date'];
-            $date = date_format($Date,"Y/m/d");    
-            
-        $RAW_QUERY = "SELECT c.Admission_Number,c.Name, a.Class_Name, a.id AS Class_id,c.id As Student_id, b.Status , b.Date FROM student c   
-        LEFT JOIN attendence b ON c.id = b.Student_Id AND b.Date = '$date'
-        RIGHT JOIN classes a ON a.id = c.classs_id     
-        WHERE c.classs_Id = $id  
+            $date = date_format($Date,"Y-m-d");    
+        $RAW_QUERY = "SELECT c.Admission_Number,c.Name, a.Class_Name, b.Status FROM student c   
+        LEFT JOIN attendence b ON c.id = b.Student_Id AND b.date = '$date'
+        RIGHT JOIN classes a ON a.id = $id  
         GROUP BY c.id";
 
         $Attendances = $this->repo->RawQuery($RAW_QUERY);
-        $forms = array();
-    
-        // foreach($Attendances as $Attendance)
-        // {
-        // $Attendencee = new Attendence();
-        // $Attendencee->setClassId($Attendance['Class_id']);
-        // $Attendencee->setStudentId($Attendance['Student_id']);
-        // $Attendencee->getDate($Date);
-        // $for = $this->createForm(AttendenceType::class,$Attendencee);
-        // $forms[] = $for->createView();
-        // }
-        return $this->render('attendance/index.html.twig', [   
+        return $this->render('attendance/GetAttendance.html.twig', [   
             'form' => $form->createView(),   
-            'date' => $date,
             'Addendance' => $Attendances
         ]);  
         }    
 
-        return $this->render('attendance/index.html.twig', [   
+        return $this->render('attendance/GetAttendance.html.twig', [   
             'form' => $form->createView(),
             'forms' => array(),
             'Addendance' =>array(),
@@ -107,4 +93,42 @@ class AttendanceController extends AbstractController
         }
         return $this->redirectToRoute('attendance');
     }
+
+    #[Route('/attendance', name: 'attendance')]
+    public function index(Request $request): Response
+    {
+       
+        $form = $this->createForm(GetAttendence::class);       
+        $form->handleRequest($request);
+    
+        if($form->isSubmitted() && $form->isValid())
+        {
+            $newClass = $form->getData("ClassId");
+            $id = $newClass['ClassId']->getid(); 
+            $Date = $newClass['Date'];
+            $date = date_format($Date,"Y/m/d");    
+            
+        $RAW_QUERY = "SELECT c.Admission_Number,c.Name, a.Class_Name, a.id AS Class_id,c.id As Student_id, b.Status , b.Date FROM student c   
+        LEFT JOIN attendence b ON c.id = b.Student_Id AND b.Date = '$date'
+        RIGHT JOIN classes a ON a.id = c.classs_id     
+        WHERE c.classs_Id = $id  
+        GROUP BY c.id";
+
+        $Attendances = $this->repo->RawQuery($RAW_QUERY);
+        $forms = array();
+    
+        return $this->render('attendance/index.html.twig', [   
+            'form' => $form->createView(),   
+            'date' => $date,
+            'Addendance' => $Attendances
+        ]);  
+        }    
+
+        return $this->render('attendance/index.html.twig', [   
+            'form' => $form->createView(),
+            'forms' => array(),
+            'Addendance' =>array(),
+        ]);  
+    }
+
 }
