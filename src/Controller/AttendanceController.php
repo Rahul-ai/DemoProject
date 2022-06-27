@@ -37,28 +37,29 @@ class AttendanceController extends AbstractController
             $newClass = $form->getData("ClassId");
             $id = $newClass['ClassId']->getid(); 
             $Date = $newClass['Date'];
-            $Date = date_format($Date,"Y/m/d");    
+            $date = date_format($Date,"Y/m/d");    
             
         $RAW_QUERY = "SELECT c.Admission_Number,c.Name, a.Class_Name, a.id AS Class_id,c.id As Student_id, b.Status , b.Date FROM student c   
-        LEFT JOIN attendence b ON c.id = b.Student_Id AND b.Date = '$Date'
+        LEFT JOIN attendence b ON c.id = b.Student_Id AND b.Date = '$date'
         RIGHT JOIN classes a ON a.id = c.classs_id     
         WHERE c.classs_Id = $id  
         GROUP BY c.id";
 
         $Attendances = $this->repo->RawQuery($RAW_QUERY);
-        dd($Attendances);
         $forms = array();
     
-        foreach($Attendances as $Attendance)
-        {
-        $Attendence = new Attendence();
-        $for = $this->createForm(AttendenceType::class,$Attendence);
-        $forms[] = $for->createView();
-        }
+        // foreach($Attendances as $Attendance)
+        // {
+        // $Attendencee = new Attendence();
+        // $Attendencee->setClassId($Attendance['Class_id']);
+        // $Attendencee->setStudentId($Attendance['Student_id']);
+        // $Attendencee->getDate($Date);
+        // $for = $this->createForm(AttendenceType::class,$Attendencee);
+        // $forms[] = $for->createView();
+        // }
         return $this->render('attendance/index.html.twig', [   
             'form' => $form->createView(),   
-            'forms' => $forms,
-            'Addendance' => $Attendance
+            'Addendance' => $Attendances
         ]);  
         }    
 
