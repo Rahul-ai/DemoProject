@@ -26,8 +26,7 @@ class EmployeeController extends AbstractController
     #[Route('/Dash', name: 'Dash')]
     public function index(): Response
     {        
-        return $this->render('Dash.html.twig', [
-        ]);
+        return $this->render('Dash.html.twig', []);
     }
 
     #[Route('/GetEmployee', name: 'GetEmployee')]
