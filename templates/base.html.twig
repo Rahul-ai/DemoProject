@@ -84,7 +84,7 @@
   {# Student View #}
   {% if app.user.roles[0] == 'Teacher' %}
   <a href="{{app.request.getBaseURL()}}/attendance" <i class="fa fa-fw fa-user"></i>Attendence</a>
-  <a href="" <i class="fa fa-fw fa-user"></i>AttendReport</a>
+  <a href="{{app.request.getBaseURL()}}/GetAtten" <i class="fa fa-fw fa-user"></i>AttendReport</a>
   {% endif %}
   
 
