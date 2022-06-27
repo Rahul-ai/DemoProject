@@ -24,7 +24,7 @@ class EmployeeController extends AbstractController
     }
 
     #[Route('/Dash', name: 'Dash')]
-    public function Dash(): Response
+    public function index(): Response
     {        
         return $this->render('Dash.html.twig', [
         ]);

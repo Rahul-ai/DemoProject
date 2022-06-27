@@ -115,7 +115,6 @@ class AttendanceController extends AbstractController
         GROUP BY c.id";
 
         $Attendances = $this->repo->RawQuery($RAW_QUERY);
-        $forms = array();
     
         return $this->render('attendance/index.html.twig', [   
             'form' => $form->createView(),   
