@@ -66,6 +66,7 @@ class EmployesRepository extends ServiceEntityRepository
             $User = new Users();
             $Algo = "@gmail.com";
             $UserName = $newEmployee->getName();
+            $UserRole = $newEmployee->getRole();
             $UserName = str_replace(" ","", $UserName); 
             $UserName = $UserName.$Algo;
             $User->setemail($UserName);
@@ -74,7 +75,7 @@ class EmployesRepository extends ServiceEntityRepository
                   $User,
                   $UserName."@123"
             )); 
-            $User->setRoles(array('Teacher'));  
+            $User->setRoles(array($UserRole));  
             $this->em->persist($User);
             $this->em->flush();
 
