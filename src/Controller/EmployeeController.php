@@ -23,6 +23,13 @@ class EmployeeController extends AbstractController
         $this->repo = $em->getRepository(Employes::class);
     }
 
+    #[Route('/Dash', name: 'Dash')]
+    public function Dash(): Response
+    {        
+        return $this->render('Dash.html.twig', [
+        ]);
+    }
+
     #[Route('/GetEmployee', name: 'GetEmployee')]
     public function GetAllEmployee(Request $request): Response
     {
