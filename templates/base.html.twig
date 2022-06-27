@@ -82,7 +82,7 @@
   <a href="{{app.request.getBaseURL()}}/attendance" <i class="fa fa-fw fa-user"></i>Attendence</a>
   <a href="" <i class="fa fa-fw fa-user"></i>AttendReport</a>
 
-<a href="" <i class="fa fa-fw fa-user"></i>Logout</a>
+<a href="/{{ app.user ? 'logout' : 'login' }}" <i class="fa fa-fw fa-user"></i>{{ app.user ? 'logout' : 'login' }}</a>
 </div>
 <div class="main">
     {% block body %}{% endblock %}

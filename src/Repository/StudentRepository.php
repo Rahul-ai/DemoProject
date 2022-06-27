@@ -2,13 +2,15 @@
 
 namespace App\Repository;
 
-use App\Entity\Student;
+use Exception;
 use App\Entity\User;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use App\Entity\Users;
+use App\Entity\Student;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
-use Exception;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 /**
  * @extends ServiceEntityRepository<Student>
@@ -21,8 +23,10 @@ use Exception;
 class StudentRepository extends ServiceEntityRepository
 {
     private $em;
-    public function __construct(ManagerRegistry $registry, EntityManagerInterface $em)
+    private $userPasswordHasher;
+    public function __construct(ManagerRegistry $registry,UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $em)
     {
+        $this->userPasswordHasher = $userPasswordHasher;
         $this->em = $em;
         parent::__construct($registry, Student::class);
     }
@@ -60,13 +64,19 @@ class StudentRepository extends ServiceEntityRepository
             $this->getEntityManager()->getConnection()->beginTransaction();
         
             //Add UserData
-            $User = new User();
+            $User = new Users();
             $Algo = "@gmail.com";
             $UserName = $newStudent->getName();
             $UserName = str_replace(" ","", $UserName); 
+            $Password = $UserName."@123";
             $UserName = $UserName.$Algo;
-            $User->setUserName($UserName);
-            $User->setPassword(12345);
+            $User->setemail($UserName);
+            $User->setPassword(
+            $this->userPasswordHasher->hashPassword(
+                $User,
+                $Password
+            ));
+            $User->setRoles(array('student'));   
             $this->em->persist($User);
             $this->em->flush();
 
