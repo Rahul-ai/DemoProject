@@ -7,33 +7,34 @@
     <h1>Add Attendence</h1>
     {{form_start(form)}}
     {{ form_widget(form)}}
-    <input class="btn btn-primary" type="Submit" value="Add Class"/>
+    <div>
+    <input class="btn btn-primary" type="Submit" value="ShowAttendence"/>
 </div>
 {{form_end(form)}}
 </div>
 </div>
 
+<div class="mt-5 container">
 <form action="SaveAttendance", method="POST" ,dataType: "json">
  {% if Addendance %}
-   <div class="table-responsive">
-           <table class="table table-bordered table-striped">
+           <table class="table table-bordered">
                 <tr>
-                     <th Style="background-color:lightgrey">Adm No</th>
-                     <th Style="background-color:lightgrey">Name</th>
-                     <th Style="background-color:lightgrey">Class</th>
-                      <th Style="background-color:lightgrey;width:200px;height:30px;">Status</th>
+                     <th>Adm No</th>
+                     <th>Name</th>
+                     <th>Class</th>
+                      <th>Status</th>
                 </tr>
                   {% for data in Addendance %}
                    <input type="hidden" name="StudentId[]" value="{{data.Student_id}}" />
                    <input type="hidden" name="ClassId[]" value="{{data.Class_id}}" />
-                    {# <input type="hidden" name="Date" value="{{Date}}" /> #}
+                    <input type="hidden" name="Date" value="{{date}}" />
                   <tr>
                      <td>{{ data.Admission_Number }}</td>
                      <td>{{ data.Name }}</td>
                      <td>{{ data.Class_Name }}</td>
                      <td>
                          <select name="status[]" Style="width:300px;height:40px;">
-                              <option disabled selected></option>
+                              <option disabled selected> Please Select</option>
                               <option value="Present">Present</option>
                               <option value="Absent">Absent</option>
                          </select>
@@ -41,10 +42,10 @@
                   </tr>
                   {% endfor %}
             </table>
-    </div>
     {% endif %}
-     <div class="form-group" Style="margin-left:80px;">
+     <div class="form-group">
                  <input type="submit"  class="btn btn-info" id="click" name="click"  value="Save Attendance" Style="width:300px;height:50px;">
     </div>
 </form>
+</div>
 {% endblock %}

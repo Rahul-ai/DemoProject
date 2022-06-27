@@ -2,10 +2,13 @@
 
 namespace App\Controller;
 
+use Exception;
 use App\Entity\GetAtt;
+use DateTimeInterface;
 use App\Entity\Attendence;
 use App\Form\GetAttendence;
 use App\Form\AttendenceType;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -59,13 +62,49 @@ class AttendanceController extends AbstractController
         // }
         return $this->render('attendance/index.html.twig', [   
             'form' => $form->createView(),   
+            'date' => $date,
             'Addendance' => $Attendances
         ]);  
         }    
 
         return $this->render('attendance/index.html.twig', [   
             'form' => $form->createView(),
-            'forms' => array()
+            'forms' => array(),
+            'Addendance' =>array(),
         ]);  
+    }
+
+    #[Route('/SaveAttendance', name: 'SaveAttendance')]
+    public function SaveAttendance(Request $request): Response
+    {
+        $form = $this->createForm(GetAttendence::class);       
+        $form->handleRequest($request);
+        $data = $request->request->all();
+        $Student = $data['StudentId'];
+        $Class = $data['ClassId'];
+        $Status = $data['status'];
+        $Date= $data['Date'];
+        $Date = DateTime::createFromFormat('Y/m/d', $Date);
+        if ($Date != null) {
+            try {
+                $this->em->getConnection()->beginTransaction();
+                for ($i = 0; $i<count($Student); $i++) {
+                    $Attendence = new Attendence();
+                    $Attendence->setClassid($Class[$i]);
+                    $Attendence->setStatus($Status[$i]);
+                    $Attendence->setStudentid($Student[$i]);
+                    $Attendence->setDate($Date);
+            
+                    $a = $this->em->persist($Attendence);
+                    $a =$this->em->flush();
+                }
+            } catch (Exception $e) {
+                dd($e);
+                $this->em->getConnection()->rollback();
+                return $this->redirectToRoute('attendance');
+            }
+            $this->em->getConnection()->commit();
+        }
+        return $this->redirectToRoute('attendance');
     }
 }

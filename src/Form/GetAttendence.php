@@ -22,10 +22,10 @@ class GetAttendence extends AbstractType
              'choice_label' => function($choice){
                 return $choice->getClassName();
             },
-             'attr' => array()
+             'attr' => array('class' => 'form-control')
             ])
             ->add('Date',DateType::class,[
-               'attr' => array()
+                'attr' => array('class' => 'form-control')
             ]);
     }
 
